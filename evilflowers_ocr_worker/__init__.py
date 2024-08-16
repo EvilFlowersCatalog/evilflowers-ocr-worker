@@ -40,6 +40,7 @@ try:
 except ImportError:
     logger.warning("OpenTelemetry not installed. Tracing disabled.")
 
+
 @app.task(bind=True)
 def ocr(self, source: str, destination: str, language: str):
     logger.info(f"OCR task started: {source} -> {destination}")
