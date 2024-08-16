@@ -19,5 +19,8 @@ RUN pip install celery[redis] ocrmypdf
 # Switch to the 'celery' user
 USER celery
 
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 CMD celery -A evilflowers_ocr_worker status || exit 1
+
 # Set the entrypoint and command to run the Celery worker
 ENTRYPOINT ["celery", "-A", "evilflowers_ocr_worker", "worker", "-E"]

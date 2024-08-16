@@ -38,7 +38,7 @@ jobs:
 
       - name: Create requirements.txt
         run: |
-          poetry export -f requirements.txt --without-hashes --output requirements.txt
+          poetry export -f requirements.txt --without-hashes --output requirements.txt -E observability
 
       - name: Log into registry ${{ env.REGISTRY }}
         if: github.event_name != 'pull_request'

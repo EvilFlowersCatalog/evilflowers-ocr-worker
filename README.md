@@ -39,13 +39,15 @@ docker run -d --name ocr_worker \
 
 ## Environment Variables
 
-| Environment Variable     | Description                                    | Default Value              | Example                       |
-|--------------------------|------------------------------------------------|----------------------------|-------------------------------|
-| `BROKER`                 | The message broker URL for Celery              | `redis://localhost:6379/0` | `redis://redis-server:6379/0` |
-| `CELERY_WORKER_LOGLEVEL` | Log level for the Celery worker                | `INFO`                     | `DEBUG`                       |
-| `CELERY_MAX_RETRIES`     | Maximum number of retries for a failed task    | `3`                        | `5`                           |
-| `CELERY_RETRY_DELAY`     | Delay in seconds before retrying a failed task | `60`                       | `120`                         |
-
+| Environment Variable          | Description                                                       | Default Value              | Example                       |
+|-------------------------------|-------------------------------------------------------------------|----------------------------|-------------------------------|
+| `BROKER`                      | The message broker URL for Celery                                 | `redis://localhost:6379/0` | `redis://redis-server:6379/0` |
+| `CELERY_WORKER_LOGLEVEL`      | Log level for the Celery worker                                   | `INFO`                     | `DEBUG`                       |
+| `CELERY_MAX_RETRIES`          | Maximum number of retries for a failed task                       | `3`                        | `5`                           |
+| `CELERY_RETRY_DELAY`          | Delay in seconds before retrying a failed task                    | `60`                       | `120`                         |
+| `OTEL_SERVICE_NAME`           | The name of the service for OpenTelemetry tracing                 | `evilflowers-ocr-worker`   | `custom-service-name`         |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | The endpoint of the OpenTelemetry Collector or backend for traces | Not set                    | `http://collector:4317`       |
+| `OTEL_LOG_LEVEL`              | Log level for OpenTelemetry-related logs                          | `INFO`                     | `DEBUG`                       |
 
 ### Using the OCR Worker from Another Workspace
 

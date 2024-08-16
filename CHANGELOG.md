@@ -6,6 +6,7 @@ This changelog suppose to follow rules defined in the [changelog.md](https://cha
 
 Initial minimum valuable product pre-release.
 
+- **Added**: OpenTelemetry support
 - **Added**: `evilflowers_ocr_worker.ocr` task introduced
 - **Added**: Sample docs
 - **Added**: Docker image
