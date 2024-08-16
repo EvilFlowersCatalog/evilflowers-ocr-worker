@@ -24,7 +24,7 @@ ecosystem.
 To build the Docker image, use the following command:
 
 ```bash
-docker build -t evilflowers/ocr_worker .
+docker build -t evilflowers-ocr-worker .
 ```
 
 ### Running the Docker Container
@@ -32,9 +32,9 @@ docker build -t evilflowers/ocr_worker .
 To run the Docker container, execute the following command:
 
 ```bash
-docker run -d --name ocr_worker \
+docker run -d --name evilflowers-ocr-worker \
     -e BROKER=redis://your_redis_instance:6379/0 \
-    evilflowers/ocr_worker
+    evilflowers-ocr-worker
 ```
 
 ## Environment Variables
@@ -80,11 +80,11 @@ For example, when running the worker container, mount the host's directories con
 files into the container:
 
 ```shell
-docker run -d --name ocr_worker \
+docker run -d --name evilflowers-ocr-worker \
     -e BROKER=redis://your_redis_instance:6379/0 \
     -v /host/source/directory:/container/source/directory \
     -v /host/destination/directory:/container/destination/directory \
-    evilflowers/ocr_worker
+    evilflowers-ocr-worker
 ```
 
 In this command, `/host/source/directory represents` the path on the host machine where your source PDF files are
