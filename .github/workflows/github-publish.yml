@@ -38,7 +38,7 @@ jobs:
 
       - name: Create requirements.txt
         run: |
-          poetry export -f requirements.txt --without-hashes --output requirements.txt -E s3 -E pdf -E apm
+          poetry export -f requirements.txt --without-hashes --output requirements.txt
 
       - name: Log into registry ${{ env.REGISTRY }}
         if: github.event_name != 'pull_request'
@@ -65,11 +65,3 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-#      - name: Attest
-#        uses: actions/attest-build-provenance@v1
-#        id: attest
-#        with:
-#          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-#          subject-digest: ${{ steps.push.outputs.digest }}
-#          push-to-registry: ${{ github.event_name != 'pull_request' }}
