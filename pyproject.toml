@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "evilflowers-ocr-worker"
+version = "0.1.0"
+description = "EvilFlowers OCR Worker - ocrmypdf proxy tool"
+authors = ["Jakub Dubec <jakub.dubec@stuba.sk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+ocrmypdf = "^16.4.3"
+celery = {version = "^5.4.0", extras = ["redis"]}
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+
+[tool.black]
+line-length = 119
+target-version = ['py312']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.github
+  | .venv
+  | data
+)/
+'''
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
