@@ -1,7 +1,9 @@
 import os
+import shutil
+
 import ocrmypdf
 import logging
-from celery import Celery
+from celery import Celery, Task
 
 # Initialize logger
 logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
@@ -42,10 +44,19 @@ except ImportError:
 
 
 @app.task(bind=True)
-def ocr(self, source: str, destination: str, language: str):
+def ocr(self: Task, source: str, destination: str, language: str):
     logger.info(f"OCR task started: {source} -> {destination}")
+
+    if source == destination:
+        target = f"/tmp/self.request.id"
+    else:
+        target = destination
+
     try:
-        ocrmypdf.ocr(source, destination, deskew=True, rotate_pages=True, language=[language])
+        ocrmypdf.ocr(source, target, deskew=True, rotate_pages=True, language=[language])
     except Exception as exc:
         logger.error(f"OCR task failed: {exc}")
-        self.retry(exc=exc, countdown=60, max_retries=3)
+        return
+
+    if source == destination:
+        shutil.move(target, destination)
