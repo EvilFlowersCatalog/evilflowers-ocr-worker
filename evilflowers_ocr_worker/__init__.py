@@ -14,7 +14,7 @@ app = Celery("evilflowers_ocr_worker", broker=os.getenv("BROKER", "redis://local
 
 # Set broker_connection_retry_on_startup to True to avoid the warning
 app.conf.update(
-    broker_connection_retry_on_startup=True,
+    broker_connection_retry_on_startup=True, result_backend=os.getenv("BROKER", "redis://localhost:6379/0")
 )
 
 # Optional: Set up OpenTelemetry tracing if available
