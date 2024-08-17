@@ -47,10 +47,8 @@ except ImportError:
 def ocr(self: Task, source: str, destination: str, language: str):
     logger.info(f"OCR task started: {source} -> {destination}")
 
-    if source == destination:
-        target = f"/tmp/self.request.id"
-    else:
-        target = destination
+    target = f"/tmp/{self.request.id}"
+    logger.debug(f"Temporary target: {target}")
 
     try:
         ocrmypdf.ocr(source, target, deskew=True, rotate_pages=True, language=[language])
@@ -58,5 +56,4 @@ def ocr(self: Task, source: str, destination: str, language: str):
         logger.error(f"OCR task failed: {exc}")
         return
 
-    if source == destination:
-        shutil.move(target, destination)
+    shutil.move(target, destination)
