@@ -12,11 +12,6 @@ logger = logging.getLogger(__name__)
 # Initialize Celery app with broker and include new settings
 app = Celery("evilflowers_ocr_worker", broker=os.getenv("BROKER", "redis://localhost:6379/0"))
 
-app.conf.event_serializer = "json"
-app.conf.task_serializer = "json"
-app.conf.result_serializer = "json"
-app.conf.accept_content = ["application/json"]
-
 # Optional: Set up OpenTelemetry tracing if available
 try:
     from opentelemetry import trace
@@ -61,5 +56,3 @@ def ocr(self: Task, source: str, destination: str, language: str):
         return
 
     shutil.move(target, destination)
-
-    return {"source": source, "target": target, "destination": destination}
