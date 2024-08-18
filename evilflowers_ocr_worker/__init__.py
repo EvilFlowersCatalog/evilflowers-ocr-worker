@@ -50,7 +50,7 @@ def ocr(self: Task, source: str, destination: str, language: str):
     destination = f"{storage_path}/{destination}"
 
     try:
-        ocrmypdf.ocr(source, target, rotate_pages=True, language=[language], output_type='pdf')
+        ocrmypdf.ocr(source, target, rotate_pages=True, language=[language], output_type="pdf")
     except Exception as exc:
         logger.error(f"OCR task failed: {exc}")
         return
