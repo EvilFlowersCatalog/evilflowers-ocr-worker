@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 # Initialize Celery app with broker and include new settings
 app = Celery("evilflowers_ocr_worker", broker=os.getenv("BROKER", "redis://localhost:6379/0"))
 
-app.conf.event_serializer = 'json' # this event_serializer is optional. somehow i missed this when writing this solution and it still worked without.
-app.conf.task_serializer = 'json'
-app.conf.result_serializer = 'json'
-app.conf.accept_content = ['application/json']
+app.conf.event_serializer = "json"
+app.conf.task_serializer = "json"
+app.conf.result_serializer = "json"
+app.conf.accept_content = ["application/json"]
 
 # Optional: Set up OpenTelemetry tracing if available
 try:
