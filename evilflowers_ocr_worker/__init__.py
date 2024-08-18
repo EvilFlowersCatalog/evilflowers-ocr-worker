@@ -50,7 +50,7 @@ def ocr(self: Task, source: str, destination: str, language: str):
     target = f"/tmp/{self.request.id}"
     logger.debug(f"Temporary target: {target}")
 
-    storage_path = os.getenv('STORAGE_PATH', '/mnt/data')
+    storage_path = os.getenv("STORAGE_PATH", "/mnt/data")
     source = f"{storage_path}/{source}"
     destination = f"{storage_path}/{destination}"
 
@@ -61,3 +61,9 @@ def ocr(self: Task, source: str, destination: str, language: str):
         return
 
     shutil.move(target, destination)
+
+    return {
+        'source': source,
+        'target': target,
+        'destination': destination
+    }
