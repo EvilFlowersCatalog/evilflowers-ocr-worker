@@ -62,8 +62,4 @@ def ocr(self: Task, source: str, destination: str, language: str):
 
     shutil.move(target, destination)
 
-    return {
-        'source': source,
-        'target': target,
-        'destination': destination
-    }
+    return {"source": source, "target": target, "destination": destination}
