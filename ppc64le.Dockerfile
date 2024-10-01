@@ -22,16 +22,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   zlib1g-dev \
   python3-dev \
   python3-distutils \
+  python3-pip \
   libffi-dev \
   ca-certificates \
   curl \
   git \
   libcairo2-dev \
   pkg-config
-
-# Get the latest pip (Ubuntu version doesn't support manylinux2010)
-RUN \
-  curl https://bootstrap.pypa.io/get-pip.py | python3
 
 # Compile and install jbig2
 # Needs libleptonica-dev, zlib1g-dev
