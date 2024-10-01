@@ -6,7 +6,7 @@ authors = ["Jakub Dubec <jakub.dubec@stuba.sk>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.11"
 ocrmypdf = "^16.4.3"
 celery = {version = "^5.4.0", extras = ["redis"]}
 opentelemetry-api = {version = "*", optional = true}

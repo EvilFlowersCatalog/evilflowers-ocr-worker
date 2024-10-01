@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2022 James R. Barlow
 # SPDX-License-Identifier: MPL-2.0
 
-FROM ppc64le/ubuntu:22.04 as base
+FROM ppc64le/ubuntu:24.04 as base
 
 ENV LANG=C.UTF-8
 ENV TZ=UTC
@@ -66,12 +66,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   pngquant \
   python-is-python3 \
   tesseract-ocr \
-  tesseract-ocr-chi-sim \
-  tesseract-ocr-deu \
-  tesseract-ocr-eng \
-  tesseract-ocr-fra \
-  tesseract-ocr-por \
-  tesseract-ocr-spa \
+  tesseract-ocr-all \
   unpaper \
   && rm -rf /var/lib/apt/lists/*
 
@@ -87,4 +82,25 @@ COPY --from=builder /app/misc/watcher.py /app/
 COPY --from=builder /app/pyproject.toml /app/README.md /app/
 COPY --from=builder /app/tests /app/tests
 
-ENTRYPOINT ["/usr/local/bin/ocrmypdf"]
+# Create a non-root user called 'celery' and set ownership of the directory
+RUN useradd --system --home /usr/local/src --shell /bin/bash celery \
+    && mkdir -p /usr/local/src \
+    && chown -R celery:celery /usr/local/src
+
+# Switch to the working directory
+WORKDIR /usr/local/src
+
+# Copy the application code and set ownership to 'celery'
+COPY --chown=celery:celery . .
+
+# Install Python dependencies
+RUN pip install celery[redis] ocrmypdf
+
+# Switch to the 'celery' user
+USER celery
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 CMD celery -A evilflowers_ocr_worker status || exit 1
+
+# Set the entrypoint and command to run the Celery worker
+ENTRYPOINT ["celery", "-A", "evilflowers_ocr_worker", "worker", "-Q", "evilflowers_ocr_worker", "-E"]
