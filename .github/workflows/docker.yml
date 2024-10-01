@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Install dependencies
         run: |
-          sudo apt install -y pipx
+          sudo apt install -y pipx buildah
           pipx ensurepath
           pipx install poetry
           pipx inject poetry poetry-plugin-export
@@ -66,6 +66,17 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build and push Docker image for POWER9
+        uses: docker/build-push-action@v5
+        id: push
+        with:
+          context: .
+          file: ppc64le.Dockerfile
+          platforms: linux/ppc64le
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
