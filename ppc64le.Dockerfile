@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2022 James R. Barlow
 # SPDX-License-Identifier: MPL-2.0
 
-FROM ppc64le/ubuntu:24.04 as base
+FROM ppc64le/ubuntu:22.04 as base
 
 ENV LANG=C.UTF-8
 ENV TZ=UTC
@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libleptonica-dev \
   zlib1g-dev \
   python3-dev \
+  python3-distutils \
   libffi-dev \
   ca-certificates \
   curl \
